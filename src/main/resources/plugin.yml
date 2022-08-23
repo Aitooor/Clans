@@ -1,0 +1,13 @@
+main: online.nasgar.clans.Clans
+version: 0.1
+name: Clans
+authors: [ Nasgar Development ]
+api-version: 1.13
+depend: [Vault, PlaceholderAPI]
+
+commands:
+   clan:
+      aliases:
+        - c
+        - clans
+   adminclan:
