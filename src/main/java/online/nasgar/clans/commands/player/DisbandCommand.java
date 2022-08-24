@@ -40,7 +40,7 @@ public class DisbandCommand extends ACommand {
 			p.sendMessage(String.format(Lang.getLang("disband_confirm"), Lang.colorString(member.getClan().getName())));
 		}
 		else {
-			if (!pending.equals(member.getClan().getId()) || args.length < 2 || !args[1].equals("confirm")) {
+			if (!pending.equals(member.getClan().getId()) || args.length < 2 || !args[1].equals("confirm") || !args[1].equals("c") || !args[1].equals("confirmar")) {
 				Pendings.removeDisbandPending(p.getUniqueId());
 				p.sendMessage(Lang.getLang("disband_canceled"));
 			}
