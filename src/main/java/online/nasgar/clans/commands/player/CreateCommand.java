@@ -66,6 +66,7 @@ public class CreateCommand extends ACommand{
 				member.setAsLeader();
 				EzEconomy.withdraw(p, cost);
 				sender.sendMessage(String.format(Lang.getLang("clan_created"), Lang.colorString(clanName)));
+				sender.sendMessage(String.format(Lang.getLang("clan_created_tag_suggestion"), Lang.colorString(clanName)));
 				Pendings.removePending(p.getUniqueId());
 			}
 		}
