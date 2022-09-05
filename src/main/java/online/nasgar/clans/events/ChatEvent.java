@@ -26,6 +26,9 @@ public class ChatEvent implements Listener {
 
 		var plainSerializer = PlainTextComponentSerializer.plainText();
 		var message = plainSerializer.serialize(e.message());
+
+		if(member == null) return;
+
 		if(member.getClan().isClanToggled()) {
 			e.setCancelled(true);
 			member.getClan().clanMessage(member, message);
