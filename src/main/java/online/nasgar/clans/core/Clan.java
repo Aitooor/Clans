@@ -1,12 +1,6 @@
 package online.nasgar.clans.core;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import online.nasgar.clans.logs.EzLogs;
 import online.nasgar.clans.utils.InventoryUtils;
@@ -27,6 +21,8 @@ public class Clan implements Cloneable, ConfigurationSerializable {
 	private String name;
 	private String tag;
 	private List<ClanMember> members;
+	private boolean isClanChatToggled;
+	private Map<UUID, ClanMember> clanChatToggle = new HashMap<>();
 	private ClanMember leader;
 	private final Date creationDate;
 	private Location home;
@@ -269,6 +265,26 @@ public class Clan implements Cloneable, ConfigurationSerializable {
 			}
 		}
 		return result;
+	}
+
+	public boolean isClanToggled() {
+		return this.isClanChatToggled;
+	}
+
+	public void clanToggle(UUID player, ClanMember cm) {
+		Player sender = Bukkit.getPlayer(player);
+		if (!this.isClanChatToggled) {
+			clanChatToggle.put(player, cm);
+			isClanChatToggled = true;
+			sender.sendMessage(Lang.getLang("clan_chat_toggled_on"));
+			return;
+		}
+		if (this.isClanChatToggled) {
+			clanChatToggle.remove(player, cm);
+			isClanChatToggled = false;
+			sender.sendMessage(Lang.getLang("clan_chat_toggled_off"));
+			return;
+		}
 	}
 	
 	public void clanMessage(ClanMember cm, String msg) {

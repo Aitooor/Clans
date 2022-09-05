@@ -53,7 +53,7 @@ public class InviteCommand extends ACommand {
 			throw new CommandException(Lang.getLang("already_in_clan_other"));
 		}
 		Pendings.setInvitePending(invitedPlayer.getUniqueId(), currentClan.getId());
-		p.sendMessage(String.format(Lang.getLang("ivitation_sent"), Lang.colorString(toInvite)));
+		p.sendMessage(String.format(Lang.getLang("invitation_send"), Lang.colorString(toInvite)));
 		invitedPlayer.sendMessage(String.format(Lang.getLang("invited_to_clan"), Lang.colorString(currentClan.getName())));
 		return false;
 	}

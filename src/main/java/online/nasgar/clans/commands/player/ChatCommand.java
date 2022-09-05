@@ -20,16 +20,18 @@ public class ChatCommand extends ACommand {
 
 	@Override
 	public boolean execute() throws Exception {
+		Player p = (Player) sender;
+		ClanMember member = online.nasgar.clans.core.Clans.getMember(p.getUniqueId());
+
 		if (!consoleExecutable && !(sender instanceof Player)) {
 			throw new CommandException(Lang.getLang("must_be_player"));
 		}
-		Player p = (Player) sender;
-		if (args.length < 2) {
-			throw new CommandException(Lang.getLang("not_enough_args"));
-		}
-		ClanMember member = online.nasgar.clans.core.Clans.getMember(p.getUniqueId());
 		if (member == null) {
 			throw new CommandException(Lang.getLang("not_in_clan"));
+		}
+		if (args.length < 2) {
+			member.getClan().clanToggle(member.getUuid(), member);
+			return true;
 		}
 		String msg = "";
 		for (int i = 1; i < args.length; i++) {

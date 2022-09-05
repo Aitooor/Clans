@@ -2,6 +2,7 @@ package online.nasgar.clans.events;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import online.nasgar.clans.core.ClanMember;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,11 +22,21 @@ public class ChatEvent implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(AsyncChatEvent e) {
 		Player p = e.getPlayer();
+		ClanMember member = online.nasgar.clans.core.Clans.getMember(p.getUniqueId());
+
 		var plainSerializer = PlainTextComponentSerializer.plainText();
 		var message = plainSerializer.serialize(e.message());
-		if (message.charAt(0) == ';') {
+		if(member.getClan().isClanToggled()) {
 			e.setCancelled(true);
-			Bukkit.getScheduler().callSyncMethod(plugin, () -> p.performCommand("clan chat "+message.substring(1)));
+			member.getClan().clanMessage(member, message);
+			return;
+		}
+		if(!member.getClan().isClanToggled()) {
+			if (message.charAt(0) == ';') {
+				e.setCancelled(true);
+				member.getClan().clanMessage(message.substring(1));
+				return;
+			}
 		}
 	}
 }
