@@ -33,8 +33,7 @@ public class ColorCommand extends ACommand {
         if (Lang.checkHex(color)) {
             member.getClan().setColor(color);
             p.sendMessage(Lang.getLang("color_set"));
-        }
-        else {
+        } else {
             p.sendMessage(Lang.getLang("color_format"));
         }
         return false;

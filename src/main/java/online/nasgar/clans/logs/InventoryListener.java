@@ -4,9 +4,8 @@
  */
 package online.nasgar.clans.logs;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
+import online.nasgar.clans.core.ClanMember;
+import online.nasgar.clans.core.Clans;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,8 +16,8 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import online.nasgar.clans.core.ClanMember;
-import online.nasgar.clans.core.Clans;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class InventoryListener implements Listener {
     /**
@@ -31,15 +30,15 @@ public class InventoryListener implements Listener {
         // Store some info
         final Player player = (Player) event.getWhoClicked();
         final Inventory inv = event.getInventory();
-        
+
         ClanMember cm = Clans.getMember(player.getUniqueId());
-        
+
         if (cm == null) {
-        	return;
+            return;
         }
-        
+
         if (cm.getClan().getStorage() != inv) {
-        	return;
+            return;
         }
 
         final Map<Integer, ItemStack> newItems = event.getNewItems();
@@ -71,20 +70,20 @@ public class InventoryListener implements Listener {
         if (slot < 0) {
             return;
         }
-        
+
         final Player player = (Player) event.getWhoClicked();
         final Inventory inv = event.getInventory();
-        
+
         ClanMember cm = Clans.getMember(player.getUniqueId());
-        
+
         if (cm == null) {
-        	return;
+            return;
         }
-        
+
         if (cm.getClan().getStorage() != inv) {
-        	return;
+            return;
         }
-        
+
         boolean isTopInv = slot < event.getInventory().getSize();
 
         ItemStack heldItem = event.getCursor();
@@ -96,7 +95,7 @@ public class InventoryListener implements Listener {
                 if (isTopInv) {
                     if (heldItem == null || heldItem.getType() == Material.AIR) {
                         if (slotItem != null && slotItem.getType() != Material.AIR) {
-                        	EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
+                            EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
                             //RecordingQueue.addToQueue(ActionFactory.createItemStack(REMOVE, slotItem, slotItem.getAmount(), slot, null, containerLoc, player));
                         }
                     } else {
@@ -107,18 +106,18 @@ public class InventoryListener implements Listener {
                         }
                         if (slotItem != null && slotItem.getType().equals(heldItem.getType())) {
                             int slotQty = slotItem.getAmount();
-                            amount = Math.min(maxStack - slotQty,heldItem.getAmount());
+                            amount = Math.min(maxStack - slotQty, heldItem.getAmount());
                         }
                         if (amount > 0) {
-                        	EzLogs.logStorage(player, heldItem.getType(), amount, "INSERT");
+                            EzLogs.logStorage(player, heldItem.getType(), amount, "INSERT");
                             //RecordingQueue.addToQueue(ActionFactory.createItemStack(INSERT, heldItem, amount, slot,null, containerLoc, player));
 
                         }
                         if (slotItem != null && slotItem.getType() != Material.AIR && !slotItem.getType().equals(heldItem.getType())) {
                             // its a switch.
-                        	EzLogs.logStorage(player, heldItem.getType(), heldItem.getAmount(), "INSERT");
+                            EzLogs.logStorage(player, heldItem.getType(), heldItem.getAmount(), "INSERT");
                             //RecordingQueue.addToQueue(ActionFactory.createItemStack(INSERT,heldItem,heldItem.getAmount(),slot,null,containerLoc,player));
-                        	EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
+                            EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
                             //RecordingQueue.addToQueue(ActionFactory.createItemStack(REMOVE,slotItem,slotItem.getAmount(),slot,null,containerLoc,player));
                         }
                     }
@@ -129,14 +128,14 @@ public class InventoryListener implements Listener {
                 if (isTopInv) {
                     if (heldItem == null || heldItem.getType() == Material.AIR) {
                         if (slotItem != null && slotItem.getType() != Material.AIR) {
-                        	EzLogs.logStorage(player, slotItem.getType(), (slotItem.getAmount() + 1) / 2, "REMOVE");
+                            EzLogs.logStorage(player, slotItem.getType(), (slotItem.getAmount() + 1) / 2, "REMOVE");
                             //RecordingQueue.addToQueue(ActionFactory.createItemStack(REMOVE, slotItem,(slotItem.getAmount() + 1) / 2, slot, null, containerLoc, player));
 
                         }
                     } else {
                         if (slotItem == null || ((slotItem != null && slotItem.getType() == Material.AIR) || (slotItem != null && slotItem.equals(heldItem)))
                                 && slotItem.getAmount() < slotItem.getType().getMaxStackSize()) {
-                        	EzLogs.logStorage(player, slotItem.getType(), 1, "INSERT");
+                            EzLogs.logStorage(player, slotItem.getType(), 1, "INSERT");
                             //RecordingQueue.addToQueue(ActionFactory.createItemStack(INSERT, slotItem, 1, slot, null,containerLoc, player));
 
                         }
@@ -149,13 +148,13 @@ public class InventoryListener implements Listener {
                     ItemStack swapItem = player.getInventory().getItem(event.getHotbarButton());
 
                     if (slotItem != null && slotItem.getType() != Material.AIR) {
-                    	EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
+                        EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
                         //RecordingQueue.addToQueue(ActionFactory.createItemStack(REMOVE, slotItem, slotItem.getAmount(),slot, null, containerLoc, player));
 
                     }
 
                     if (swapItem != null && swapItem.getType() != Material.AIR) {
-                    	EzLogs.logStorage(player, swapItem.getType(), swapItem.getAmount(), "INSERT");
+                        EzLogs.logStorage(player, swapItem.getType(), swapItem.getAmount(), "INSERT");
                         //RecordingQueue.addToQueue(ActionFactory.createItemStack(INSERT, swapItem, swapItem.getAmount(), slot, null, containerLoc, player));
 
                     }
@@ -177,7 +176,7 @@ public class InventoryListener implements Listener {
                     if (is != null && (is.getType() != Material.AIR || is.equals(heldItem))) {
                         size += is.getAmount();
                     }
-                    amount = recordDeductTransfer("REMOVE",size,amount,heldItem,player);
+                    amount = recordDeductTransfer("REMOVE", size, amount, heldItem, player);
                     if (amount <= 0) {
                         break;
                     }
@@ -222,7 +221,7 @@ public class InventoryListener implements Listener {
                         ItemStack is = contents[i];
 
                         if (slotItem.isSimilar(is)) {
-                            amount = recordDeductTransfer("INSERT",stackSize - is.getAmount(),amount,slotItem,player);
+                            amount = recordDeductTransfer("INSERT", stackSize - is.getAmount(), amount, slotItem, player);
                             if (amount <= 0) {
                                 break;
                             }
@@ -235,7 +234,7 @@ public class InventoryListener implements Listener {
                             ItemStack is = contents[i];
 
                             if (is == null || is.getType() == Material.AIR) {
-                                amount = recordDeductTransfer("INSERT",stackSize,amount,slotItem, player);
+                                amount = recordDeductTransfer("INSERT", stackSize, amount, slotItem, player);
                                 if (amount <= 0) {
                                     break;
                                 }
@@ -248,7 +247,7 @@ public class InventoryListener implements Listener {
             // DROPS
             case DROP:
                 if (slotItem != null && slotItem.getType() != Material.AIR && slotItem.getAmount() > 0) {
-                	EzLogs.logStorage(player, slotItem.getType(), 1, "REMOVE");
+                    EzLogs.logStorage(player, slotItem.getType(), 1, "REMOVE");
                     //RecordingQueue.addToQueue(ActionFactory.createItemStack(REMOVE, slotItem, 1, slot, null, containerLoc, player));
 
                 }
@@ -256,7 +255,7 @@ public class InventoryListener implements Listener {
 
             case CONTROL_DROP:
                 if (slotItem != null && slotItem.getType() != Material.AIR && slotItem.getAmount() > 0) {
-                	EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
+                    EzLogs.logStorage(player, slotItem.getType(), slotItem.getAmount(), "REMOVE");
                     //RecordingQueue.addToQueue(ActionFactory.createItemStack(REMOVE, slotItem, slotItem.getAmount(),slot, null, containerLoc, player));
 
                 }
@@ -276,7 +275,7 @@ public class InventoryListener implements Listener {
         int transferred = Math.min(size, amount);
         int newAmount = amount - transferred;
         if (transferred > 0) {
-        	EzLogs.logStorage(player, heldItem.getType(), transferred, act);
+            EzLogs.logStorage(player, heldItem.getType(), transferred, act);
             //RecordingQueue.addToQueue(ActionFactory.createItemStack(act, heldItem, transferred, slotLocation, null, containerLoc, player));
 
         }

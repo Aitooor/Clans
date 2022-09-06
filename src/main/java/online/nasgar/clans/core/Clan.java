@@ -64,8 +64,8 @@ public class Clan implements Cloneable, ConfigurationSerializable {
         this.id = id;
         this.name = name;
         this.tag = tag == null ? "" : tag;
-		this.members = members == null ? new ArrayList<>() : members;
-		this.leader = leader;
+        this.members = members == null ? new ArrayList<>() : members;
+        this.leader = leader;
         this.creationDate = creationDate;
         this.home = home;
         this.disbanded = false;
@@ -212,7 +212,7 @@ public class Clan implements Cloneable, ConfigurationSerializable {
 
     public boolean addMember(ClanMember clanMember) {
         if (clanMember.getUuid().equals(leader.getUuid()) ||
-				members.stream().anyMatch(m -> m.getUuid().equals(clanMember.getUuid()))) {
+                members.stream().anyMatch(m -> m.getUuid().equals(clanMember.getUuid()))) {
             return false;
         }
 
@@ -251,7 +251,7 @@ public class Clan implements Cloneable, ConfigurationSerializable {
     }
 
     public void withdraw(int amt) {
-		bank = amt > bank ? 0 : bank - amt;
+        bank = amt > bank ? 0 : bank - amt;
     }
 
     public void deposit(int amt) {
@@ -343,19 +343,19 @@ public class Clan implements Cloneable, ConfigurationSerializable {
 
     public void closeStorageForAll() {
         List<HumanEntity> viewers = storage.getViewers();
-		List<HumanEntity> viewersCopy = new LinkedList<>(viewers);
+        List<HumanEntity> viewersCopy = new LinkedList<>(viewers);
         for (HumanEntity viewer : viewersCopy)
             viewer.closeInventory();
     }
 
     private void upgradeStorage(int lvl) {
         Inventory newStorage = lvl == 2 ?
-				Bukkit.createInventory(null, 27, Lang.getLang("clan_storage")) : lvl == 3 ?
-				Bukkit.createInventory(null, 54, Lang.getLang("clan_storage")) : null;
+                Bukkit.createInventory(null, 27, Lang.getLang("clan_storage")) : lvl == 3 ?
+                Bukkit.createInventory(null, 54, Lang.getLang("clan_storage")) : null;
         closeStorageForAll();
 
-		if (newStorage != null)
-        	newStorage.setContents(storage.getContents());
+        if (newStorage != null)
+            newStorage.setContents(storage.getContents());
 
         storage = newStorage;
     }

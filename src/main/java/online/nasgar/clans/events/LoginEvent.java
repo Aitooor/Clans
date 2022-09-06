@@ -18,7 +18,7 @@ public class LoginEvent implements Listener {
             String message = member.getClan().getLoginMessage();
             if (!message.isEmpty()) {
                 String tag = member.getClan().getTag();
-                message = Lang.colorString("&8[&b"+tag+"&8] &r"+message);
+                message = Lang.colorString("&8[&b" + tag + "&8] &r" + message);
                 String finalMessage = message;
                 Bukkit.getScheduler().runTaskLater(Clans.plugin, () -> {
                     Player player = Bukkit.getPlayer(member.getUuid());

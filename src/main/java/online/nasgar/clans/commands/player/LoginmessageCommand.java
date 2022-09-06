@@ -29,21 +29,20 @@ public class LoginmessageCommand extends ACommand {
         if (args.length < 2) {
             member.getClan().setLoginMessage("");
             p.sendMessage(Lang.getLang("loginmessage_removed"));
-        }
-        else {
+        } else {
             String message = "";
             for (int i = 1; i < args.length; i++) {
-                if (i == args.length-1)
-                    message+=args[i];
+                if (i == args.length - 1)
+                    message += args[i];
                 else
-                    message+=args[i]+" ";
+                    message += args[i] + " ";
             }
             message = Lang.colorString(message);
             if (message.length() > online.nasgar.clans.core.Clans.maxLoginMessageLength) {
-                throw new CommandException(String.format(Lang.getLang("loginmessage_toolong"), online.nasgar.clans.core.Clans.maxLoginMessageLength +""));
+                throw new CommandException(String.format(Lang.getLang("loginmessage_toolong"), online.nasgar.clans.core.Clans.maxLoginMessageLength + ""));
             }
             member.getClan().setLoginMessage(message);
-            p.sendMessage(Lang.getLang("loginmessage_set")+message);
+            p.sendMessage(Lang.getLang("loginmessage_set") + message);
         }
         return false;
     }
