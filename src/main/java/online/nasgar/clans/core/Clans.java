@@ -15,15 +15,15 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class Clans {
-	public static Map<UUID, Clan> clans = new HashMap<UUID, Clan>();
-	public static Map<UUID,ClanMember> members = new TreeMap<UUID,ClanMember>();
+	public static Map<UUID, Clan> clans = new HashMap<>();
+	public static Map<UUID,ClanMember> members = new TreeMap<>();
 	
 	public static List<Integer> clanCost;
 	public static List<Integer> homeCd;
 	public static List<Integer> maxBank;
 	public static List<Integer> maxMembers;
-	public static int maxLoginmessageLength = 80;
-	public static int sethomeCost;
+	public static int maxLoginMessageLength = 80;
+	public static int setHomeCost;
 	public static String clanChatFormat = "&7[&2ClanChat&7] &r&c%s&r: %s";
 	public static int clansPerPage = 8;
 	
@@ -32,9 +32,9 @@ public class Clans {
 		homeCd = (List<Integer>) config.getList("clan_home_cd");
 		maxBank = (List<Integer>) config.getList("clan_bank");
 		maxMembers = (List<Integer>) config.getList("clan_capacity");
-		sethomeCost = config.getInt("clan_sethome_cost");
+		setHomeCost = config.getInt("clan_sethome_cost");
 		clanChatFormat = config.getString("clan_msg");
-		maxLoginmessageLength = config.getInt("clan_loginmessage_max");
+		maxLoginMessageLength = config.getInt("clan_loginmessage_max");
 	}
 	
 	public static void addClan(Clan c) {
@@ -230,7 +230,7 @@ public class Clans {
 		}
 	}
 	
-	public static int getSethomeCost() {
-		return sethomeCost;
+	public static int getSetHomeCost() {
+		return setHomeCost;
 	}
 }

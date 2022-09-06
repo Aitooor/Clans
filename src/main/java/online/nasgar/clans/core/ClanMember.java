@@ -5,9 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import online.nasgar.clans.lang.Lang;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @SerializableAs("ClanMember")
 public class ClanMember implements Cloneable, ConfigurationSerializable {
@@ -17,6 +20,7 @@ public class ClanMember implements Cloneable, ConfigurationSerializable {
 	private boolean clanPvp;
 	private String status;
 	private Clan clan;
+	private boolean clanChatToggled;
 	
 	public ClanMember(Player p, Clan c) {
 		this.uuid = p.getUniqueId();
@@ -81,6 +85,23 @@ public class ClanMember implements Cloneable, ConfigurationSerializable {
 	public void setClan(Clan clan) {
 		this.clan = clan;
 	}
+
+	public boolean isClanChatToggled() {
+		return this.clanChatToggled;
+	}
+
+	public void setClanChatToggled(boolean value) {
+		this.clanChatToggled = value;
+	}
+
+	public void toggleChat() {
+		setClanChatToggled(!isClanChatToggled());
+		getPlayer().sendMessage(Lang.getLang("clan_chat_toggled_" + (isClanChatToggled() ? "on" : "off")));
+	}
+
+	public Player getPlayer() {
+		return Bukkit.getPlayer(this.uuid);
+	}
 	
 	public void setAsLeader() {
 		this.status = "leader";
@@ -104,7 +125,7 @@ public class ClanMember implements Cloneable, ConfigurationSerializable {
 	}
 
 	@Override
-	public Map<String, Object> serialize() {
+	public @NotNull Map<String, Object> serialize() {
 		LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
 		result.put("name", name);
 		result.put("uuid", uuid.toString());

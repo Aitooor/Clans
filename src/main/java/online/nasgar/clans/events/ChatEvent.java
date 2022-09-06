@@ -13,33 +13,22 @@ import online.nasgar.clans.Clans;
 
 public class ChatEvent implements Listener {
 	
-	private Clans plugin;
-	
-	public ChatEvent(Clans plugin) {
-		this.plugin = plugin;
-	}
-	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(AsyncChatEvent e) {
 		Player p = e.getPlayer();
 		ClanMember member = online.nasgar.clans.core.Clans.getMember(p.getUniqueId());
 
-		var plainSerializer = PlainTextComponentSerializer.plainText();
-		var message = plainSerializer.serialize(e.message());
+		PlainTextComponentSerializer plainSerializer = PlainTextComponentSerializer.plainText();
+		String message = plainSerializer.serialize(e.message());
 
-		if(member == null) return;
+		if (member == null) return;
 
-		if(member.getClan().isClanToggled()) {
+		if (member.isClanChatToggled()) {
 			e.setCancelled(true);
 			member.getClan().clanMessage(member, message);
-			return;
-		}
-		if(!member.getClan().isClanToggled()) {
-			if (message.charAt(0) == ';') {
-				e.setCancelled(true);
-				member.getClan().clanMessage(message.substring(1));
-				return;
-			}
+		} else if (message.charAt(0) == ';') {
+			e.setCancelled(true);
+			member.getClan().clanMessage(message.substring(1));
 		}
 	}
 }

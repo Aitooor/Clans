@@ -26,19 +26,22 @@ public class ChatCommand extends ACommand {
 		if (!consoleExecutable && !(sender instanceof Player)) {
 			throw new CommandException(Lang.getLang("must_be_player"));
 		}
+
 		if (member == null) {
 			throw new CommandException(Lang.getLang("not_in_clan"));
 		}
+
 		if (args.length < 2) {
-			member.getClan().clanToggle(member.getUuid(), member);
+			member.toggleChat();
 			return true;
 		}
-		String msg = "";
+
+		StringBuilder msg = new StringBuilder();
 		for (int i = 1; i < args.length; i++) {
-			msg += args[i]+" ";
+			msg.append(args[i]).append(" ");
 		}
-		msg = CommandManager.stripColor(msg).trim();
-		member.getClan().clanMessage(member, msg);
+		msg = new StringBuilder(CommandManager.stripColor(msg.toString()).trim());
+		member.getClan().clanMessage(member, msg.toString());
 		return false;
 	}
 

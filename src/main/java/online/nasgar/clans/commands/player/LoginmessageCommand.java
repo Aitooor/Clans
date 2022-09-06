@@ -39,8 +39,8 @@ public class LoginmessageCommand extends ACommand {
                     message+=args[i]+" ";
             }
             message = Lang.colorString(message);
-            if (message.length() > online.nasgar.clans.core.Clans.maxLoginmessageLength) {
-                throw new CommandException(String.format(Lang.getLang("loginmessage_toolong"), online.nasgar.clans.core.Clans.maxLoginmessageLength+""));
+            if (message.length() > online.nasgar.clans.core.Clans.maxLoginMessageLength) {
+                throw new CommandException(String.format(Lang.getLang("loginmessage_toolong"), online.nasgar.clans.core.Clans.maxLoginMessageLength +""));
             }
             member.getClan().setLoginMessage(message);
             p.sendMessage(Lang.getLang("loginmessage_set")+message);

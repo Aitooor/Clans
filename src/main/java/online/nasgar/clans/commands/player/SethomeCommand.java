@@ -33,13 +33,13 @@ public class SethomeCommand extends ACommand {
 			throw new CommandException(Lang.getLang("not_leader_or_moderator"));
 		}
 		Clan clan = member.getClan();
-		if (clan.getBank() >= online.nasgar.clans.core.Clans.getSethomeCost()) {
+		if (clan.getBank() >= online.nasgar.clans.core.Clans.getSetHomeCost()) {
 			clan.setHome(p.getLocation());
 			p.sendMessage(Lang.getLang("sethome"));
-			clan.withdraw(online.nasgar.clans.core.Clans.getSethomeCost());
+			clan.withdraw(online.nasgar.clans.core.Clans.getSetHomeCost());
 		}
 		else {
-			throw new CommandException(String.format(Lang.getLang("bank_not_enough"), online.nasgar.clans.core.Clans.getSethomeCost()+""));
+			throw new CommandException(String.format(Lang.getLang("bank_not_enough"), online.nasgar.clans.core.Clans.getSetHomeCost()+""));
 		}
 		return false;
 	}

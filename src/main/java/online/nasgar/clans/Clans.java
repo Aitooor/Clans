@@ -60,7 +60,7 @@ public class Clans extends JavaPlugin {
 	private void registerEvents() {
 		getServer().getPluginManager().registerEvents(new PlayerMove(), this);
 		getServer().getPluginManager().registerEvents(new PvpEvent(), this);
-		getServer().getPluginManager().registerEvents(new ChatEvent(this), this);
+		getServer().getPluginManager().registerEvents(new ChatEvent(), this);
 		getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 		getServer().getPluginManager().registerEvents(new LoginEvent(), this);
 	}
