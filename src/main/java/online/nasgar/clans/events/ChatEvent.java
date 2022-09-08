@@ -1,22 +1,20 @@
 package online.nasgar.clans.events;
 
-import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import online.nasgar.clans.core.ClanMember;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatEvent implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerChat(AsyncChatEvent e) {
+    public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         ClanMember member = online.nasgar.clans.core.Clans.getMember(p.getUniqueId());
 
-        PlainTextComponentSerializer plainSerializer = PlainTextComponentSerializer.plainText();
-        String message = plainSerializer.serialize(e.message());
+        String message = e.getMessage();
 
         if (member == null) return;
 
